@@ -10,9 +10,3 @@ stu_score = {
     'ur':'chemistry'
 }
 st = pd.Series(stu_score)
-
-x = np.random.randn(20)
-y = x**2
-
-import matplotlib.pyplot  as plt
-plt.plot(x,y)
