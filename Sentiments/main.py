@@ -33,7 +33,7 @@ def train(train_x,freq,train_y):
     for i in range(len(train_x)):
         X[i,:] = extract_features(train_x[i],freq)
     Y = train_y
-    J,theta = gradient_decent(X,Y,np.zeros((3,1)),1e-9,1500)
+    J,theta = gradient_decent(X,Y,np.random.randn(3,1),1e-9,1500)
     print(f'final--->cost ->{J}\t theta -> {theta}')
     return J,theta
 
