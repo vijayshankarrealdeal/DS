@@ -10,7 +10,6 @@ n = 1
 x = np.random.uniform(1,2,1000)
 y = x.copy()
 
-#mean
 x = x - np.mean(x)
 y = y - np.mean(y)
 
