@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import re
 import matplotlib.pyplot as plt
-
+from collections import  Counter
 def process_text(file_name):    
     word = re.findall(r'\w+',open('shakespeare.txt').read().lower())
     return word,len(word)
@@ -38,7 +38,7 @@ def delete_word(word):
     split_l = []
     split_l = [(word[i:],word[:i]) for i in range(len(word)+1)]
     delete_l = [word[:i]+word[i+1:] for i in range(len(word))]
-    return split_l,delete_l
+    return delete_l
 
 def insert_word(word):
     letters = 'abcdefghijklmnopqrstuvwxyz'
@@ -92,9 +92,26 @@ def corrections(word,probs,vocab,n = 2):
     if word in vocab:
         word_prob[word] = probs[word]
     
-    if
+    if len(word_prob) == 0:
+        word_one_edit = one_away(word)
+        for temp_word in word_one_edit:
+            if temp_word in vocab:
+                word_prob[temp_word] = probs[temp_word]
+    n_best = Counter(word_prob).most_common(n)
+    for best_word,probablity in n_best:
+        suggestions.append(best_word)
     
+    print("entered word = ", word, "\nsuggestions = ", suggestions)   
+    return n_best         
+            
+        
     
+my_word = 'som' 
+tmp_corrections = corrections(my_word, prob, unique_words, 2) 
+for i, word_prob in enumerate(tmp_corrections):
+    print(f"word {i}: {word_prob[0]}, probability {word_prob[1]:.6f}")
+
+print(f"data type of corrections {type(tmp_corrections)}")
     
     
     
