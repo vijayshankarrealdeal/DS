@@ -1,6 +1,4 @@
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 from utils_nb import plot_vectors
 #here we will 
 #scale , Translate, Rotate
