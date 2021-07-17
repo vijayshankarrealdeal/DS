@@ -104,17 +104,54 @@ def corrections(word,probs,vocab,n = 2):
     print("entered word = ", word, "\nsuggestions = ", suggestions)   
     return n_best         
             
-        
+"""
+for D[i,j]
+min = {
+       
+       D[i-1,j] = insert + 1
+       D[i,j-1] = del + 1
+       D[i-1,j-1] = {
+           if source[i] != target[j]
+               replace + 2
+           }
+       
+       }
+"""    
+
+def get_min_distance(source,target,insert_cost = 1, delete_cost = 1, replace_cost  = 2):
     
-my_word = 'som' 
+    m = len(source)
+    n = len(target)
+    
+    D = np.zeros((m+1,n+1),dtype = 'int64')
+    
+    for i in range(m):
+        D[i+1,0] = D[i,0] + delete_cost
+    for j in  range(n):
+        D[0,j+1] = D[0,j] + insert_cost
+    
+    for i in range(1,m+1):
+        for j in range(1,n+1):
+            
+            replace_co = D[i-1,j-1] 
+            left = D[i-1,j] + delete_cost
+            right = D[i,j-1] + insert_cost
+            
+            if source[i-1] != target[j-1]:
+                replace_co = replace_co + replace_cost
+            
+            D[i,j] = min(left,right,replace_co)
+    
+    med = D[m,n]
+    return D,med
+    
+my_word = 'pla' 
 tmp_corrections = corrections(my_word, prob, unique_words, 2) 
 for i, word_prob in enumerate(tmp_corrections):
-    print(f"word {i}: {word_prob[0]}, probability {word_prob[1]:.6f}")
-
-print(f"data type of corrections {type(tmp_corrections)}")
-    
-    
-    
-    
+    table,dis = get_min_distance(my_word,word_prob[0])
+    print(f'{word_prob[0]}->{dis} distance needed for change')
+    #print(f"word {i}: {word_prob[0]}, probability {word_prob[1]:.6f}")
     
 
+    
+    
