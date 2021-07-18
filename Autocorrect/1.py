@@ -35,8 +35,6 @@ prob = get_prob(get_frequency_of_word)
 
 def delete_word(word):
     delete_l = []
-    split_l = []
-    split_l = [(word[i:],word[:i]) for i in range(len(word)+1)]
     delete_l = [word[:i]+word[i+1:] for i in range(len(word))]
     return delete_l
 
